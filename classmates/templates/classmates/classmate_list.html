@@ -1,0 +1,187 @@
+<html>
+    <head>
+        <title>Classmates</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <style>
+            * {
+                box-sizing: border-box;
+                animation: all 1s ease;
+            }
+
+            table > tbody > tr > td {
+                overflow-wrap: break-word;
+            }
+
+            .border-transparent {
+                border-color: transparent !important;
+            }
+
+            .border-none {
+            }
+
+            .frosted-glass {
+                background-color: #ffffffe0;
+                backdrop-filter: blur(10px);
+            }
+
+            .cell-action {
+                width: 36px;
+            }
+
+            .gender {
+                width: 4rem;
+                overflow-wrap: break-word;
+            }
+
+            .age {
+                width: 3rem;
+                overflow-wrap: break-word;
+            }
+
+            .row-hover-expand:hover {
+                background-color: #f1f1f1;
+            }
+
+            .row-hover-expand:hover > * {
+                padding-top: 0.7rem;
+                padding-bottom: 0.7rem;
+            }
+
+            .bg-neon-purple-turquoise {
+                background: linear-gradient(90deg, #ff6b6b, #00c9ff);
+                background-size: 200% 200%;
+                animation: gradient 15s ease infinite;
+            }
+        </style>
+    </head>
+    <body class="bg-neon-purple-turquoise">
+        <div class="container container-md min-vh-100 d-flex flex-column frosted-glass rounded rounded-2">
+            <h1 class="text-center mt-3">Classmates</h1>
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-success rounded-1" href="{% url "classmate_new" %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-add me-1" viewBox="0 0 16 16">
+                        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                        <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                    </svg>
+                    New Classmate
+                </a>
+            </div>
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr class="d-none d-lg-table-row">
+                        <th class="d-none d-lg-table-cell">Firstname</th>
+                        <th class="d-none d-lg-table-cell">Lastname</th>
+                        <th class="d-table-cell d-lg-none">Name</th>
+                        <th class="gender">Gender</th>
+                        <th class="age">Age</th>
+                        <th>Address</th>
+                        <th class="d-none d-lg-table-cell" colspan="3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for classmate in object_list %}
+                        <tr class="d-none d-lg-table-row row-hover-expand">
+                            <td class="d-none d-lg-table-cell">{{ classmate.firstname }}</td>
+                            <td class="d-none d-lg-table-cell">{{ classmate.lastname }}</td>
+                            <td class="d-table-cell d-lg-none">{{ classmate.lastname }}, {{ classmate.firstname }}</td>
+                            <td>{{ classmate.gender }}</td>
+                            <td class="age">{{ classmate.age }}</td>
+                            <td>{{ classmate.address }}</td>
+                            <td class="d-none d-lg-table-cell cell-action">
+                                <a class="btn btn-outline-secondary p-0 m-0 rounded-1 popover-view" href="{% url "classmate_view" classmate.id %}" data-bs-placement="top" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="View">
+                                    <svg class="bi bi-eye p-2" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                                    </svg>
+                                </a>
+                            </td>
+                            <td class="d-none d-lg-table-cell cell-action">
+                                <a class="btn btn-outline-primary p-0 m-0 rounded-1 popover-edit" href="{% url "classmate_edit" classmate.id %}" data-bs-placement="top" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Edit">
+                                    <svg class="bi bi-pencil p-2" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                    </svg>
+                                </a>
+                            </td>
+                            <td class="d-none d-lg-table-cell cell-action">
+                                <a class="btn btn-outline-danger p-0 m-0 rounded-1 popover-delete" href="{% url "classmate_delete" classmate.id %}" data-bs-placement="top" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Delete">
+                                    <svg class="bi bi-trash p-2" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="d-table-row d-lg-none">
+                            <th colspan="2" class="text-center">{{ classmate.lastname }}, {{ classmate.firstname }}</th>
+                        </tr>
+                        <tr class="d-table-row d-lg-none">
+                            <th>Gender</th>
+                            <td>{{ classmate.gender }}</td>
+                        </tr>
+                        <tr class="d-table-row d-lg-none">
+                            <th>Age</th>
+                            <td>{{ classmate.age }}</td>
+                        </tr>
+                        <tr class="d-table-row d-lg-none">
+                            <th>Address</th>
+                            <td>{{ classmate.address }}</td>
+                        </tr>
+                        <tr class="d-table-row d-lg-none mb-3">
+                            <th colspan="2" class="text-center">
+                                <a class="btn btn-outline-secondary p-2 m-0 rounded rounded-1" href="{% url "classmate_view" classmate.id %}">
+                                    <svg class="bi bi-eye" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                                    </svg> View
+                                </a>
+                                <a class="btn btn-outline-primary p-2 mx-2 m-0 rounded rounded-1" href="{% url "classmate_edit" classmate.id %}">
+                                    <svg class="bi bi-pencil" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                    </svg> Edit
+                                </a>
+                                <a class="btn btn-outline-danger p-2 m-0 rounded rounded-1" href="{% url "classmate_delete" classmate.id %}">
+                                    <svg class="bi bi-trash" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                    </svg> Delete
+                                </a>
+                            </th>
+                        </tr>
+                        <tr class="invisible d-table-row d-md-none border-transparent border-none"><td class="py-2" colspan="2"></td></tr>
+                        <tr></tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="100%" class="text-center">No Classmates in the List</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var viewpopeverelements = document.querySelectorAll( '.popover-view' );
+                var editpopoverelements = document.querySelectorAll( '.popover-edit' );
+                var deletepopoverelements = document.querySelectorAll( '.popover-delete' );
+                viewpopeverelements.forEach( function( element ) {
+                    new bootstrap.Popover( element, {
+                        trigger: 'hover'
+                    });
+                });
+                editpopoverelements.forEach( function( element ) {
+                    new bootstrap.Popover( element, {
+                        trigger: 'hover'
+                    });
+                });
+                deletepopoverelements.forEach( function( element ) {
+                    new bootstrap.Popover( element, {
+                        trigger: 'hover'
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
